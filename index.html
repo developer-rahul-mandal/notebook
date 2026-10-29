@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#15251b" />
+    <meta name="description" content="A private notebook that lives in your browser." />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Notebook</title>
+  </head>
+  <body>
+    <main class="app" aria-label="Notebook">
+      <aside class="sidebar">
+        <a class="brand" href="./" aria-label="Notebook home"><span>N</span> Notebook</a>
+        <button class="new-note" id="newNote" type="button">+ New note <kbd>Ctrl N</kbd></button>
+        <div class="library-heading"><span>MY NOTES</span><strong id="noteCount">0</strong></div>
+        <label class="note-search"><span class="sr-only">Search notes</span><input id="noteSearch" type="search" placeholder="Search notes…" autocomplete="off" /></label>
+        <div class="folder-heading">FOLDERS</div>
+        <nav id="folderNav" class="folder-nav" aria-label="Filter notes by folder"></nav>
+        <button id="trashToggle" class="trash-toggle" type="button" aria-pressed="false">Trash <strong id="trashCount">0</strong></button>
+        <div id="tagFilters" class="tag-filters" aria-label="Filter notes by tag"></div>
+        <nav id="noteList" class="note-list" aria-label="Pinned, recent, and all notes"></nav>
+        <p class="privacy-note"><span>●</span> Saved privately in this browser</p>
+      </aside>
+      <section class="workspace">
+        <header class="topbar">
+          <div><p class="eyebrow">PERSONAL NOTEBOOK</p><p id="saveState" class="save-state">Everything is saved locally</p></div>
+          <div class="topbar-actions">
+            <button id="openCommandPalette" class="secondary-new" type="button">Commands <kbd>Ctrl K</kbd></button>
+            <button id="openGraph" class="secondary-new" type="button">Graph</button>
+            <button id="installApp" class="secondary-new" type="button" hidden>Install app</button>
+            <button id="exportBackup" class="secondary-new" type="button">Export JSON</button>
+            <button id="importBackup" class="secondary-new" type="button">Import JSON</button>
+            <input id="backupFile" type="file" accept="application/json,.json" hidden />
+            <button id="importMarkdown" class="secondary-new" type="button">Import .md</button>
+            <input id="markdownFile" type="file" accept=".md,text/markdown,text/plain" hidden />
+            <button id="newNoteTop" class="secondary-new" type="button">+ Write note</button>
+          </div>
+        </header>
+        <section id="welcome" class="welcome">
+          <div class="welcome-mark">N</div>
+          <p class="eyebrow">YOUR PRIVATE SPACE</p>
+          <h1>Keep the things worth remembering.</h1>
+          <p>Start with a simple note. It stays in this browser, even after a refresh.</p>
+          <button id="welcomeNewNote" class="primary-action" type="button">Create your first note</button>
+        </section>
+        <article id="editor" class="editor" hidden>
+          <div class="editor-header"><input id="noteTitle" aria-label="Note title" placeholder="Untitled note" autocomplete="off" /><button id="versionHistoryToggle" class="secondary-new" type="button" aria-expanded="false">History</button><button id="exportMarkdown" class="secondary-new" type="button">Export .md</button><button id="deleteNote" class="delete-note" type="button" title="Delete note">Delete</button></div>
+          <p id="editedAt" class="edited-at"></p>
+          <section id="duplicateWarning" class="duplicate-warning" aria-live="polite" hidden></section>
+          <div class="folder-editor"><label for="folderInput">Folder</label><input id="folderInput" type="text" aria-label="Note folder" placeholder="e.g. Projects/Ideas" autocomplete="off" /><span>Press Enter to move</span></div>
+          <div class="tag-editor" aria-label="Note tags"><div id="tagList" class="tag-list"></div><input id="tagInput" type="text" aria-label="Add a tag" placeholder="Add a tag and press Enter" autocomplete="off" /></div>
+          <div class="editor-tabs" role="tablist" aria-label="Editor view"><button class="tab active" data-view="write" type="button" role="tab" aria-selected="true">Write</button><button class="tab" data-view="preview" type="button" role="tab" aria-selected="false">Preview</button><button id="splitView" class="split-view" type="button" title="Show editor and preview together">Split view</button></div>
+          <div id="compose" class="compose"><textarea id="noteBody" aria-label="Note content" placeholder="# Weekly planning&#10;&#10;## Top priorities&#10;- Review **project status**&#10;- Share *meeting notes*&#10;&#10;See [[Project Overview]] for context.&#10;&#10;Use `Ctrl+S` to save now." spellcheck="true"></textarea><section id="preview" class="preview markdown" aria-label="Markdown preview"></section></div>
+          <section id="backlinks" class="backlinks" aria-label="Backlinks" hidden></section>
+          <section id="versionHistory" class="version-history" aria-label="Version history" hidden></section>
+          <footer class="editor-footer"><span id="wordCount">0 words</span><span>Markdown supported</span></footer>
+        </article>
+      </section>
+    </main>
+    <dialog id="graphDialog" class="graph-dialog" aria-labelledby="graphTitle">
+      <header class="graph-header">
+        <div><h2 id="graphTitle">Note connections</h2><p id="graphSummary"></p></div>
+        <button id="closeGraph" class="secondary-new" type="button">Close</button>
+      </header>
+      <div id="graphCanvas" class="graph-canvas"></div>
+    </dialog>
+    <dialog id="commandDialog" class="command-dialog" aria-labelledby="commandTitle">
+      <label id="commandTitle" class="sr-only" for="commandSearch">Search commands and notes</label>
+      <input id="commandSearch" type="search" autocomplete="off" placeholder="Search commands and notes…" aria-label="Search commands and notes" />
+      <div id="commandResults" class="command-results" role="listbox" aria-label="Commands and matching notes"></div>
+      <p class="command-hint"><kbd>↑</kbd><kbd>↓</kbd> to navigate <kbd>Enter</kbd> to select <kbd>Esc</kbd> to close</p>
+    </dialog>
+    <div id="toast" class="toast" hidden role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>

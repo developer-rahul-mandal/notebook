@@ -1,0 +1,19 @@
+{
+  "name": "Notebook — Offline Knowledge Manager",
+  "short_name": "Notebook",
+  "description": "A private, offline-first knowledge manager.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f5ef",
+  "theme_color": "#15251b",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
