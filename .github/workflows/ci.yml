@@ -1,33 +1,23 @@
-
-name: React CI
+name: Notebook CI
 
 on:
-  push:
-    branches: [main, master]
   pull_request:
-    branches: [main, master]
+    branches:
+      - main
 
 jobs:
-  build:
-    name: Build and Test React
+  validate:
+    name: Validate Project
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 22
-          cache: npm
+      - name: Check HTML
+        run: |
+          test -f index.html
+          echo "index.html exists."
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run tests
-        run: npm test -- --run
-        continue-on-error: true
-
-      - name: Build React application
-        run: npm run build
+      - name: CI passed
+        run: echo "All checks passed successfully!"
